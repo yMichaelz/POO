@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class ProgramaRetangulos {
+public class ProgramaRetangulo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -9,53 +9,57 @@ public class ProgramaRetangulos {
         Retangulo[] retangulos = new Retangulo[5];
         int count = 0;
 
-        // Loop para adicionar retângulos ao vetor
-        while (true) {
+        // Preenche as 5 primeiras posições do vetor
+        while (count < retangulos.length) {
             System.out.println("Informe a largura e altura do Retângulo " + (count + 1) + ":");
             System.out.print("Largura: ");
             double largura = scanner.nextDouble();
             System.out.print("Altura: ");
             double altura = scanner.nextDouble();
 
-            // Verifica se o vetor está cheio, e se necessário, expande-o
-            if (count == retangulos.length) {
-                retangulos = expandirVetor(retangulos);
-            }
+            // Adiciona o novo Retangulo ao vetor
+            retangulos[count] = new Retangulo(largura, altura);
+            count++;
+        }
+
+        // Exibe as informações dos primeiros 5 retângulos
+        System.out.println("\nInformações dos primeiros 5 Retângulos:");
+        for (int i = 0; i < count; i++) {
+            retangulos[i].exibirInformacoes();
+        }
+
+        // Expande o vetor para 10 posições
+        retangulos = expandirVetor(retangulos, 10);
+
+        // Preenche as novas 5 posições do vetor
+        while (count < retangulos.length) {
+            System.out.println("Informe a largura e altura do Retângulo " + (count + 1) + ":");
+            System.out.print("Largura: ");
+            double largura = scanner.nextDouble();
+            System.out.print("Altura: ");
+            double altura = scanner.nextDouble();
 
             // Adiciona o novo Retangulo ao vetor
             retangulos[count] = new Retangulo(largura, altura);
             count++;
-
-            // Pergunta se o usuário deseja adicionar mais retângulos
-            System.out.print("Deseja adicionar outro retângulo? (s/n): ");
-            char resposta = scanner.next().charAt(0);
-            if (resposta != 's' && resposta != 'S') {
-                break;
-            }
-        }
-
-        // Exibe as informações de cada retângulo
-        System.out.println("\nInformações dos Retângulos:");
-        for (int i = 0; i < count; i++) {
-            retangulos[i].exibirInfor();
         }
 
         // Classifica os retângulos por área em ordem crescente
         ordenarPorArea(retangulos, count);
 
         // Exibe os retângulos ordenados por área
-        System.out.println("Retângulos ordenados por área:");
+        System.out.println("\nRetângulos ordenados por área:");
         for (int i = 0; i < count; i++) {
-            retangulos[i].exibirInfor();
+            retangulos[i].exibirInformacoes();
         }
 
         scanner.close();
     }
 
-    // Método para expandir dinamicamente o vetor
-    public static Retangulo[] expandirVetor(Retangulo[] vetor) {
-        Retangulo[] novoVetor = Arrays.copyOf(vetor, vetor.length * 2);
-        System.out.println("Vetor expandido para " + novoVetor.length + " posições.");
+    // Método para expandir dinamicamente o vetor para um novo tamanho
+    public static Retangulo[] expandirVetor(Retangulo[] vetor, int novoTamanho) {
+        Retangulo[] novoVetor = Arrays.copyOf(vetor, novoTamanho);
+        System.out.println("\nVetor expandido para " + novoTamanho + " posições.");
         return novoVetor;
     }
 
